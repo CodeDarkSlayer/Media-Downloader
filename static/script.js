@@ -1,4 +1,3 @@
-
 document.getElementById('downloadForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -7,7 +6,6 @@ document.getElementById('downloadForm').addEventListener('submit', async (e) => 
     const status = document.getElementById('status');
     const loading = document.getElementById('loading');
 
-    // Reset status dan tampilkan loading
     status.innerHTML = '';
     loading.classList.remove('hidden');
 
@@ -25,8 +23,8 @@ document.getElementById('downloadForm').addEventListener('submit', async (e) => 
 
         const data = await response.json();
         loading.classList.add('hidden');
-        status.textContent = data.message;
-        status.className = `status ${data.status}`;
+        status.textContent = data.message || 'Video berhasil diunduh!';
+        status.className = `status ${data.status || 'success'}`;
 
         if (data.status === 'success') {
             const downloadLink = document.createElement('a');
