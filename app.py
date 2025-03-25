@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, send_file, jsonify
 import os
-import subprocess
+import requests
 import shutil
 
 app = Flask(__name__)
@@ -10,10 +10,10 @@ DOWNLOAD_FOLDER = "downloads"
 if not os.path.exists(DOWNLOAD_FOLDER):
     os.makedirs(DOWNLOAD_FOLDER)
 
-# Pastikan file cookies ada
-COOKIES_FILE = "youtube_cookies.txt"
-if not os.path.exists(COOKIES_FILE):
-    raise FileNotFoundError(f"File {COOKIES_FILE} tidak ditemukan!")
+# Konfigurasi API YouTube Media Downloader dari RapidAPI
+API_KEY = os.getenv("API_KEY", "044d8892a9msh51b5c0e40615619p104023jsnbb634a112907")  # Ganti dengan API key-mu
+API_HOST = "youtube-media-downloader.p.rapidapi.com"
+API_URL = "https://youtube-media-downloader.p.rapidapi.com/api/youtube"
 
 @app.route('/')
 def index():
@@ -33,46 +33,38 @@ def download():
         if os.path.isfile(file_path):
             os.unlink(file_path)
 
-    # Tentukan format output
-    output_template = os.path.join(DOWNLOAD_FOLDER, '%(title)s.%(ext)s')
-    if format == 'mp3':
-        command = [
-            'yt-dlp',
-            '--cookies', COOKIES_FILE,  # Gunakan path cookies
-            '--extract-audio',
-            '--audio-format', 'mp3',
-            '-o', output_template,
-            url
-        ]
-    else:
-        command = [
-            'yt-dlp',
-            '--cookies', COOKIES_FILE,  # Gunakan path cookies
-            '-f', 'bestvideo+bestaudio/best',
-            '--merge-output-format', 'mp4',
-            '-o', output_template,
-            url
-        ]
-
     try:
-        # Jalankan perintah yt-dlp
-        subprocess.run(command, check=True)
+        # Kirim permintaan ke API YouTube Media Downloader
+        headers = {
+            "X-RapidAPI-Key": API_KEY,
+            "X-RapidAPI-Host": API_HOST
+        }
+        params = {
+            "url": url
+        }
+        response = requests.get(API_URL, headers=headers, params=params)
+        data = response.json()
 
-        # Cari file yang diunduh
-        downloaded_files = os.listdir(DOWNLOAD_FOLDER)
-        if not downloaded_files:
-            return jsonify({'status': 'error', 'message': 'Gagal mengunduh video!'})
+        if data.get("status") != "success":
+            return jsonify({'status': 'error', 'message': data.get("message", "Gagal mengunduh video!")})
 
-        # Ambil file pertama yang diunduh
-        file_path = os.path.join(DOWNLOAD_FOLDER, downloaded_files[0])
+        # Unduh file dari URL yang diberikan oleh API
+        video_url = data["video"]["download_url"]
+        video_filename = data["video"]["title"] + f".{format}"
+        video_path = os.path.join(DOWNLOAD_FOLDER, video_filename)
+
+        with open(video_path, 'wb') as f:
+            video_response = requests.get(video_url, stream=True)
+            for chunk in video_response.iter_content(chunk_size=8192):
+                if chunk:
+                    f.write(chunk)
+
         return jsonify({
             'status': 'success',
             'message': 'Video berhasil diunduh!',
-            'filename': downloaded_files[0]
+            'filename': video_filename
         })
 
-    except subprocess.CalledProcessError as e:
-        return jsonify({'status': 'error', 'message': f'Error saat mengunduh: {str(e)}'})
     except Exception as e:
         return jsonify({'status': 'error', 'message': f'Error: {str(e)}'})
 
