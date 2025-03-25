@@ -33,7 +33,7 @@ def download():
     if format == 'mp3':
         command = [
             'yt-dlp',
-            '--proxy', 'http://13.37.73.214:80',  # Ganti dengan proxy yang valid
+            '--proxy', 'http://91.107.130.145:11000',  # Ganti dengan proxy yang valid
             '--extract-audio',
             '--audio-format', 'mp3',
             '-o', output_template,
@@ -42,7 +42,7 @@ def download():
     else:
         command = [
             'yt-dlp',
-            '--proxy', 'http://13.37.73.214:80',  # Ganti dengan proxy yang valid
+            '--proxy', 'http://91.107.130.145:11000',  # Ganti dengan proxy yang valid
             '-f', 'bestvideo+bestaudio/best',
             '--merge-output-format', 'mp4',
             '-o', output_template,
