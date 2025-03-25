@@ -10,6 +10,11 @@ DOWNLOAD_FOLDER = "downloads"
 if not os.path.exists(DOWNLOAD_FOLDER):
     os.makedirs(DOWNLOAD_FOLDER)
 
+# Pastikan file cookies ada
+COOKIES_FILE = "youtube_cookies.txt"
+if not os.path.exists(COOKIES_FILE):
+    raise FileNotFoundError(f"File {COOKIES_FILE} tidak ditemukan!")
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -33,6 +38,7 @@ def download():
     if format == 'mp3':
         command = [
             'yt-dlp',
+            '--cookies', COOKIES_FILE,  # Gunakan path cookies
             '--extract-audio',
             '--audio-format', 'mp3',
             '-o', output_template,
@@ -41,6 +47,7 @@ def download():
     else:
         command = [
             'yt-dlp',
+            '--cookies', COOKIES_FILE,  # Gunakan path cookies
             '-f', 'bestvideo+bestaudio/best',
             '--merge-output-format', 'mp4',
             '-o', output_template,
@@ -77,4 +84,5 @@ def get_file(filename):
     return jsonify({'status': 'error', 'message': 'File tidak ditemukan!'})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5003, debug=True)
+    port = int(os.getenv("PORT", 8000))
+    app.run(host='0.0.0.0', port=port, debug=True)
