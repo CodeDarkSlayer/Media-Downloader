@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Downloader</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Social Media Downloader</h1>
+        <p>Unduh video dari YouTube, Instagram, TikTok, Facebook, dan lainnya dengan mudah!</p>
+        <form id="downloadForm">
+            <input type="text" id="urlInput" placeholder="Masukkan URL video (YouTube, Instagram, TikTok, dll)" required>
+            <select id="formatSelect">
+                <option value="mp4">Video (MP4)</option>
+                <option value="mp3">Audio (MP3)</option>
+            </select>
+            <button type="submit" class="download-btn">
+                <span class="btn-text">Unduh Sekarang</span>
+                <span class="btn-icon">⬇️</span>
+            </button>
+        </form>
+        <div id="status" class="status">
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <span>Mengunduh...</span>
+            </div>
+        </div>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>
