@@ -4,30 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social Media Downloader</title>
-    <link rel="stylesheet" href="/static/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <div class="container">
         <h1>Social Media Downloader</h1>
-        <p>Unduh video dari YouTube, Instagram, TikTok, Facebook, dan lainnya dengan mudah!</p>
+        <p>Masukkan URL video dari YouTube</p>
         <form id="downloadForm">
-            <input type="text" id="urlInput" placeholder="Masukkan URL video (YouTube, Instagram, TikTok, dll)" required>
+            <input type="text" id="urlInput" placeholder="Masukkan URL video" required>
             <select id="formatSelect">
-                <option value="mp4">Video (MP4)</option>
-                <option value="mp3">Audio (MP3)</option>
+                <option value="mp4">MP4 (Video)</option>
+                <option value="mp3">MP3 (Audio)</option>
             </select>
             <button type="submit" class="download-btn">
-                <span class="btn-text">Unduh Sekarang</span>
-                <span class="btn-icon">⬇️</span>
+                <span>Unduh Sekarang</span>
+                <svg class="arrow" viewBox="0 0 24 24">
+                    <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                </svg>
             </button>
         </form>
-        <div id="status" class="status">
-            <div id="loading" class="loading hidden">
-                <div class="spinner"></div>
-                <span>Mengunduh...</span>
-            </div>
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Sedang mengunduh...</p>
         </div>
+        <div id="status" class="status"></div>
     </div>
     <script src="/static/script.js"></script>
 </body>
