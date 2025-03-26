@@ -33,7 +33,6 @@ def download():
     if format == 'mp3':
         command = [
             'yt-dlp',
-            '--proxy', 'http://91.107.130.145:11000',  # Ganti dengan proxy yang valid
             '--extract-audio',
             '--audio-format', 'mp3',
             '-o', output_template,
@@ -42,7 +41,6 @@ def download():
     else:
         command = [
             'yt-dlp',
-            '--proxy', 'http://91.107.130.145:11000',  # Ganti dengan proxy yang valid
             '-f', 'bestvideo+bestaudio/best',
             '--merge-output-format', 'mp4',
             '-o', output_template,
@@ -79,5 +77,4 @@ def get_file(filename):
     return jsonify({'status': 'error', 'message': 'File tidak ditemukan!'})
 
 if __name__ == '__main__':
-    port = int(os.getenv("PORT", 8000))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
