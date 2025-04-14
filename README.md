@@ -39,3 +39,74 @@ Sebelum memulai, pastikan Anda telah menginstal berikut ini di sistem Anda:
 ```bash
 git clone https://github.com/r00tH3x/youtube-downloader.git
 cd youtube-downloader
+```
+
+### 2. Buat Virtual Environment (Opsional tapi Disarankan)
+```bash
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+```
+
+### 3. Instal Dependensi Python
+```bash
+pip install flask
+```
+
+### 4. Instal yt-dlp
+```bash
+pip install yt-dlp
+```
+
+### 5. Instal FFmpeg
+
+#### Windows:
+- [Download FFmpeg](https://ffmpeg.org/download.html) lalu tambahkan ke PATH
+
+#### macOS:
+```bash
+brew install ffmpeg
+```
+
+#### Linux:
+```bash
+# Debian/Ubuntu
+sudo apt install ffmpeg
+
+# CentOS/RHEL
+sudo yum install ffmpeg
+```
+
+---
+
+## Cara Penggunaan
+
+### 1. Jalankan Aplikasi
+```bash
+python app.py
+```
+
+Aplikasi akan berjalan di: `http://localhost:5000`
+
+### 2. Akses Antarmuka Web
+Buka browser dan kunjungi `http://localhost:5000`. Masukkan URL YouTube dan pilih format (MP4 / MP3).
+
+### 3. Unduh Konten
+- Masukkan URL YouTube yang valid (contoh: `https://www.youtube.com/watch?v=XXXX`)
+- Pilih format: `MP4` (video) atau `MP3` (audio)
+- Klik **"Unduh Sekarang"** untuk mulai proses pengunduhan
+
+---
+
+## Lisensi
+
+Distribusikan di bawah lisensi MIT. Lihat file `LICENSE` untuk detail lengkapnya.
+
+---
+
+## Kontribusi
+
+Pull request sangat diterima! Untuk perubahan besar, silakan buka issue terlebih dahulu untuk diskusi.
+
+---
+
+> **r00tH3x** — Tools built to educate, not to exploit.
